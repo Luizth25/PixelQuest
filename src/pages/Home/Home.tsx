@@ -1,5 +1,4 @@
 import { useState } from "react";
-import styled from "styled-components";
 
 import ActiveMissionsList from "../../components/ActiveMissionsList";
 import Banner from "../../components/Banner";
@@ -12,10 +11,12 @@ import { useCharacterStore } from "../../store/characterStore/characterStore";
 
 import { charSelected } from "../../types";
 import { ChangeAvatarButton, MainContainer } from "./Home.styles";
+import useLevelStore from "../../store/levelStore/levelStore";
 
 const Home = () => {
   const [showModal, setShowModal] = useState(false);
   const avatar = useCharacterStore((state) => state.avatar);
+  const currentXp = useLevelStore((state) => state.xp);
 
   return (
     <>
@@ -31,10 +32,9 @@ const Home = () => {
         <UserStatus
           avatar={avatar}
           name="Luiz, o Codificador"
-          level={1}
           charClass={charSelected[avatar]}
         />
-        <XpBar current={20} max={100} />
+        <XpBar current={currentXp} max={100} />
         <ActiveMissionsList />
         <QuickAccessButtons />
       </MainContainer>

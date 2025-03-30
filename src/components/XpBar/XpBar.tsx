@@ -1,3 +1,4 @@
+import useLevelStore from "../../store/levelStore/levelStore";
 import { BarContainer, BarFill, Wrapper } from "./XpBar.styles";
 
 type TXPBarProps = {
@@ -6,13 +7,13 @@ type TXPBarProps = {
 };
 
 const XpBar = ({ current, max }: TXPBarProps) => {
-  const percentage = Math.min(100, Math.floor((current / max) * 100));
+  const xp = useLevelStore((state) => state.xp);
 
   return (
     <Wrapper>
       XP: {current} / {max}
       <BarContainer>
-        <BarFill percentage={percentage} />
+        <BarFill percentage={(xp / 100) * 100} />
       </BarContainer>
     </Wrapper>
   );

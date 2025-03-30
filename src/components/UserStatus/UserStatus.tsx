@@ -1,14 +1,16 @@
+import useLevelStore from "../../store/levelStore/levelStore";
 import { Character } from "../../types";
 import { Container } from "./UserStatus.styles";
 
 type TUserStatusProps = {
   avatar: Character;
   name: string;
-  level: number;
   charClass: string;
 };
 
-const UserStatus = ({ avatar, name, level, charClass }: TUserStatusProps) => {
+const UserStatus = ({ avatar, name, charClass }: TUserStatusProps) => {
+  const level = useLevelStore((state) => state.level);
+
   return (
     <Container>
       <div>
