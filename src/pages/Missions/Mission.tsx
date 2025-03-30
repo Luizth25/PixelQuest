@@ -1,5 +1,5 @@
 // pages/Missions.tsx
-function Missions() {
+const Missions = () => {
   return <h1>📝 Missões</h1>;
-}
+};
 export default Missions;
