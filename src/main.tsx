@@ -27,7 +27,7 @@ function ThemeWrapper() {
           position: "absolute",
           top: 20,
           right: 20,
-          padding: "10px 20px",
+          padding: "12px 20px",
           background: theme.colors.primary,
           color: theme.colors.text,
           borderRadius: "8px",

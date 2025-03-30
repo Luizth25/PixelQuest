@@ -1,11 +1,11 @@
 import { BarContainer, BarFill, Wrapper } from "./XpBar.styles";
 
-interface IXPBarProps {
+type TXPBarProps = {
   current: number;
   max: number;
-}
+};
 
-const XpBar = ({ current, max }: IXPBarProps) => {
+const XpBar = ({ current, max }: TXPBarProps) => {
   const percentage = Math.min(100, Math.floor((current / max) * 100));
 
   return (

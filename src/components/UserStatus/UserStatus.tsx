@@ -1,13 +1,14 @@
+import { Character } from "../../types";
 import { Container } from "./UserStatus.styles";
 
-interface IUserStatusProps {
-  avatar: "warrior" | "mage" | "archer";
+type TUserStatusProps = {
+  avatar: Character;
   name: string;
   level: number;
   charClass: string;
-}
+};
 
-const UserStatus = ({ avatar, name, level, charClass }: IUserStatusProps) => {
+const UserStatus = ({ avatar, name, level, charClass }: TUserStatusProps) => {
   return (
     <Container>
       <div>

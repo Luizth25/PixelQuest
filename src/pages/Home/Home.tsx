@@ -1,24 +1,43 @@
+import { useState } from "react";
+import styled from "styled-components";
+
 import ActiveMissionsList from "../../components/ActiveMissionsList";
 import Banner from "../../components/Banner";
 import QuickAccessButtons from "../../components/QuickAccessButtons";
 import UserStatus from "../../components/UserStatus";
 import XpBar from "../../components/XpBar";
+import CharacterModal from "../../components/CharacterModal";
+
+import { useCharacterStore } from "../../store/characterStore/characterStore";
+
+import { charSelected } from "../../types";
+import { ChangeAvatarButton, MainContainer } from "./Home.styles";
 
 const Home = () => {
+  const [showModal, setShowModal] = useState(false);
+  const avatar = useCharacterStore((state) => state.avatar);
+
   return (
     <>
       <Banner title="Painel do Herói" />
-      <main style={{ padding: `0 24px` }}>
+      <MainContainer>
+        <ChangeAvatarButton onClick={() => setShowModal(true)} style={{}}>
+          Selecionar Personagem
+        </ChangeAvatarButton>
+        <CharacterModal
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+        />
         <UserStatus
-          avatar="mage"
+          avatar={avatar}
           name="Luiz, o Codificador"
           level={1}
-          charClass="Mago"
+          charClass={charSelected[avatar]}
         />
         <XpBar current={20} max={100} />
         <ActiveMissionsList />
         <QuickAccessButtons />
-      </main>
+      </MainContainer>
     </>
   );
 };
