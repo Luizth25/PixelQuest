@@ -60,7 +60,7 @@ const Missions = () => {
   };
 
   useEffect(() => {
-    fetch("src/mock/task.json")
+    fetch("/mock/task.json")
       .then((res) => res.json())
       .then((data) => setMissions(data));
   }, [setMissions]);

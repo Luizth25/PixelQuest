@@ -45,7 +45,7 @@ const CharacterModal = ({ isOpen, onClose }: TCharacterModal) => {
             selected={avatar === id}
             onClick={() => setAvatar(id as Character)}
           >
-            <img src={`src/images/avatars/${id}.png`} alt={id} />
+            <img src={`/images/avatars/${id}.png`} alt={id} />
             <p>{charSelected[id as keyof typeof charSelected]}</p>
           </AvatarButton>
         ))}
