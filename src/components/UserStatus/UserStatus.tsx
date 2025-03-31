@@ -20,7 +20,7 @@ const UserStatus = ({ avatar, name, charClass }: TUserStatusProps) => {
         </p>
       </div>
       <img
-        src={`src/images/avatars/${avatar}.png`}
+        src={`/images/avatars/${avatar}.png`}
         alt="Avatar"
         width={64}
         height={64}
