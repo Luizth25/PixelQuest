@@ -46,13 +46,14 @@ pixelquest/
 - TypeScript
 - Styled-components
 - React Router DOM
+- Zustand
 
 ---
 
 ## 🎯 Próximos Passos
 
-- [ ] Sistema de tarefas com níveis de dificuldade
-- [ ] Barra de XP e sistema de níveis
+- [x] Sistema de tarefas com níveis de dificuldade
+- [x] Barra de XP e sistema de níveis
 - [ ] Inventário e personalização de personagem
 - [ ] Modo Boss Battle para dias intensos
 - [ ] Salvar dados no LocalStorage ou Firebase
