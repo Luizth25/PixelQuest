@@ -1,6 +1,7 @@
 import Modal from "react-modal";
 import { useCharacterStore } from "../../store/characterStore/characterStore";
-import { Character, charSelected } from "../../types";
+import { Character } from "../../types";
+import { charSelected } from "../../constants";
 import { AvatarButton, AvatarGrid } from "./CharacterModal.style";
 
 Modal.setAppElement("#root");

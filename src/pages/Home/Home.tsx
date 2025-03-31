@@ -9,7 +9,7 @@ import CharacterModal from "../../components/CharacterModal";
 
 import { useCharacterStore } from "../../store/characterStore/characterStore";
 
-import { charSelected } from "../../types";
+import { charSelected } from "../../constants";
 import { ChangeAvatarButton, MainContainer } from "./Home.styles";
 import useLevelStore from "../../store/levelStore/levelStore";
 
@@ -20,7 +20,7 @@ const Home = () => {
 
   return (
     <>
-      <Banner title="Painel do Herói" />
+      <Banner icon="🎮" title="Painel do Herói" />
       <MainContainer>
         <ChangeAvatarButton onClick={() => setShowModal(true)} style={{}}>
           Selecionar Personagem

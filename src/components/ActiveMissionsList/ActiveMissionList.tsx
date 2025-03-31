@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Container, Mission, Title } from "./ActiveMissionsList.styles";
 import useLevelStore from "../../store/levelStore/levelStore";
+import toggleTaskCompletion from "../../functions/useToggleTaskComplete";
 
 type TTask = {
   id: number;
@@ -10,24 +11,17 @@ type TTask = {
 };
 
 const ActiveMissionsList = () => {
+  const xpInitialized = useRef(false);
+  const [missions, setMissions] = useState<TTask[]>([]);
+
   const addXp = useLevelStore((state) => state.addXp);
   const removeXp = useLevelStore((state) => state.removeXp);
 
-  const [missions, setMissions] = useState<TTask[]>([
-    {
-      id: 1,
-      title: "Derrotar o dragão do Código",
-      done: false,
-      difficulty: "hard",
-    },
-    {
-      id: 2,
-      title: "Terminar componente de tarefas",
-      done: false,
-      difficulty: "medium",
-    },
-    { id: 3, title: "Estudar React Router", done: false, difficulty: "easy" },
-  ]);
+  useEffect(() => {
+    fetch("src/mock/task.json")
+      .then((res) => res.json())
+      .then((data) => setMissions(data));
+  }, [setMissions]);
 
   const getXp = (difficulty: string) => {
     switch (difficulty) {
@@ -44,18 +38,26 @@ const ActiveMissionsList = () => {
 
   const handleCheck = (id: number) => {
     setMissions((prev) =>
-      prev.map((mission) => {
-        if (mission.id === id) {
-          const xpAmount = getXp(mission.difficulty);
-          if (!mission.done) addXp(xpAmount);
-          else removeXp(xpAmount);
-
-          return { ...mission, done: !mission.done };
-        }
-        return mission;
-      })
+      toggleTaskCompletion(
+        prev,
+        id,
+        (task) => addXp(getXp(task.difficulty)),
+        (task) => removeXp(getXp(task.difficulty))
+      )
     );
   };
+
+  useEffect(() => {
+    if (!xpInitialized.current && missions.length > 0) {
+      const completedTasks = missions.filter((task) => task.done);
+      const xp = completedTasks.reduce(
+        (acc, task) => acc + getXp(task.difficulty),
+        0
+      );
+      addXp(xp);
+      xpInitialized.current = true;
+    }
+  }, [missions, addXp]);
 
   return (
     <Container>
