@@ -1,68 +1,40 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { Container, Mission, Title } from "./ActiveMissionsList.styles";
 import useLevelStore from "../../store/levelStore/levelStore";
-import toggleTaskCompletion from "../../functions/useToggleTaskComplete";
-
-type TTask = {
-  id: number;
-  title: string;
-  difficulty: "easy" | "medium" | "hard";
-  done: boolean;
-};
+import useTaskStore from "../../store/useTaskStores";
 
 const ActiveMissionsList = () => {
-  const xpInitialized = useRef(false);
-  const [missions, setMissions] = useState<TTask[]>([]);
-
   const addXp = useLevelStore((state) => state.addXp);
   const removeXp = useLevelStore((state) => state.removeXp);
+  const { fetchTasks, tasks, toggleTask } = useTaskStore();
 
   useEffect(() => {
-    fetch("/mock/task.json")
-      .then((res) => res.json())
-      .then((data) => setMissions(data));
-  }, [setMissions]);
+    const fetchData = async () => {
+      await fetchTasks();
+    };
 
-  const getXp = (difficulty: string) => {
-    switch (difficulty) {
-      case "easy":
-        return 10;
-      case "medium":
-        return 20;
-      case "hard":
-        return 40;
-      default:
-        return 0;
+    fetchData();
+  }, [fetchTasks]);
+
+  const handleCheck = async (id: number) => {
+    const tarefa = tasks.find((t) => t.id === id);
+    if (!tarefa) return;
+
+    const doneQuest = !tarefa.done;
+
+    await toggleTask(id, doneQuest);
+
+    if (doneQuest) {
+      addXp(getXp(tarefa.difficulty));
+    } else {
+      removeXp(getXp(tarefa.difficulty));
     }
   };
-
-  const handleCheck = (id: number) => {
-    setMissions((prev) =>
-      toggleTaskCompletion(
-        prev,
-        id,
-        (task) => addXp(getXp(task.difficulty)),
-        (task) => removeXp(getXp(task.difficulty))
-      )
-    );
-  };
-
-  useEffect(() => {
-    if (!xpInitialized.current && missions.length > 0) {
-      const completedTasks = missions.filter((task) => task.done);
-      const xp = completedTasks.reduce(
-        (acc, task) => acc + getXp(task.difficulty),
-        0
-      );
-      addXp(xp);
-      xpInitialized.current = true;
-    }
-  }, [missions, addXp]);
 
   return (
     <Container>
       <Title>📋 Missões Ativas</Title>
-      {missions.map((mission) => (
+      {tasks.map((mission) => (
         <Mission key={mission.id}>
           <input
             type="checkbox"

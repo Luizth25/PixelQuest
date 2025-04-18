@@ -31,7 +31,7 @@ const Missions = () => {
   const removeXP = useLevelStore((state) => state.removeXp);
 
   const getXPValue = (diff: string) =>
-    diff === "easy" ? 10 : diff === "medium" ? 25 : 40;
+    diff === "easy" ? 10 : diff === "medium" ? 20 : 40;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

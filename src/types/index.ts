@@ -6,3 +6,11 @@ export type MissionType = {
   difficulty: "easy" | "medium" | "hard";
   done: boolean;
 };
+
+export type TasksType = {
+  id: number;
+  title: string;
+  difficulty: "easy" | "medium" | "hard";
+  done: boolean;
+  xp: number;
+};
